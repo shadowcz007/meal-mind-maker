@@ -1,13 +1,47 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { UserProvider } from "@/context/UserContext";
+import Header from "@/components/Header";
+import StepIndicator from "@/components/StepIndicator";
+import UserInfoForm from "@/components/UserInfoForm";
+import DietaryPreferenceForm from "@/components/DietaryPreferenceForm";
+import MealPlanGenerator from "@/components/MealPlanGenerator";
+import MealPlanDisplay from "@/components/MealPlanDisplay";
+import { useUser } from "@/context/UserContext";
+
+const StepContent = () => {
+  const { currentStep } = useUser();
+
+  switch (currentStep) {
+    case 0:
+      return <UserInfoForm />;
+    case 1:
+      return <DietaryPreferenceForm />;
+    case 2:
+      return <MealPlanGenerator />;
+    case 3:
+      return <MealPlanDisplay />;
+    default:
+      return <UserInfoForm />;
+  }
+};
+
+const IndexContent = () => {
+  return (
+    <div className="min-h-screen bg-gray-50 pb-10">
+      <Header />
+      <div className="container mx-auto pt-4">
+        <StepIndicator />
+        <StepContent />
+      </div>
+    </div>
+  );
+};
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <UserProvider>
+      <IndexContent />
+    </UserProvider>
   );
 };
 
